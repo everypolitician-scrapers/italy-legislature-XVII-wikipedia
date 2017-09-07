@@ -32,6 +32,7 @@ def scrape_list(url)
       faction: li.xpath('preceding::h3').last.css('span.mw-headline').text,
       source: url,
     }
+    puts data.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h if ENV['MORPH_DEBUG']
     ScraperWiki.save_sqlite([:name, :faction], data)
   end
 end

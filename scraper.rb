@@ -1,5 +1,6 @@
 #!/bin/env ruby
 # encoding: utf-8
+# frozen_string_literal: true
 
 require 'scraperwiki'
 require 'nokogiri'
@@ -10,7 +11,7 @@ OpenURI::Cache.cache_path = '.cache'
 
 class String
   def tidy
-    self.gsub(/[[:space:]]+/, ' ').strip
+    gsub(/[[:space:]]+/, ' ').strip
   end
 end
 
@@ -27,13 +28,13 @@ def scrape_list(url)
   h3s.first.xpath('following-sibling::ul/li').each do |li|
     who = li.css('a').first
     data = {
-      name: who.text.tidy,
+      name:     who.text.tidy,
       wikiname: who.attr('class') == 'new' ? nil : who.attr('title'),
-      faction: li.xpath('preceding::h3').last.css('span.mw-headline').text,
-      source: url,
+      faction:  li.xpath('preceding::h3').last.css('span.mw-headline').text,
+      source:   url,
     }
     puts data.reject { |_, v| v.to_s.empty? }.sort_by { |k, _| k }.to_h if ENV['MORPH_DEBUG']
-    ScraperWiki.save_sqlite([:name, :faction], data)
+    ScraperWiki.save_sqlite(%i[name faction], data)
   end
 end
 

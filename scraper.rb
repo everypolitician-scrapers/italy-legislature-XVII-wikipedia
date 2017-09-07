@@ -36,4 +36,5 @@ def scrape_list(url)
   end
 end
 
+ScraperWiki.sqliteexecute('DROP TABLE data') rescue nil
 scrape_list('https://it.wikipedia.org/wiki/Deputati_della_XVII_Legislatura_della_Repubblica_Italiana')

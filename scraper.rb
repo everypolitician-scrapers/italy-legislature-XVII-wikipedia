@@ -21,7 +21,7 @@ end
 
 def scrape_list(url)
   noko = noko_for(url)
-  noko.xpath('//h2[span[@id="Modifiche_Intervenute"]]/following-sibling::*').map(&:remove)
+  noko.xpath('//h2[span[@id="Modifiche_intervenute"]]/following-sibling::*').map(&:remove)
 
   h2 = noko.xpath('//h2[span[@id="Gruppi_Parlamentari"]]')
   h3s = h2.xpath('following-sibling::h2 | following-sibling::h3').slice_before { |e| e.name != 'h3' }.first

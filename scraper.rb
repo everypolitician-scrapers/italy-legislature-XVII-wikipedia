@@ -2,18 +2,9 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require 'scraperwiki'
-require 'nokogiri'
-require 'colorize'
 require 'pry'
-require 'open-uri/cached'
-OpenURI::Cache.cache_path = '.cache'
-
-class String
-  def tidy
-    gsub(/[[:space:]]+/, ' ').strip
-  end
-end
+require 'scraped'
+require 'scraperwiki'
 
 def noko_for(url)
   Nokogiri::HTML(open(url).read)
